@@ -11,6 +11,14 @@ First you need libsndfile : http://www.mega-nerd.com/libsndfile/
 
 Then you can invoke `make` to build the thing.
 
+# Example
+`duck_enc "Hello quack world"` creates `out.wav`, an audio file playable by any sound player.
+
+`duck_dec out.wav` writes back "Hello quack world".
+
+# Why ?
+Don't ask me.
+
 # Notes
 The code is crappy, malloc-d arrays aren't freed and stuff.
 
