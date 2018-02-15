@@ -3,7 +3,7 @@
 #include <string.h>
 #include <sndfile.h>
 
-short *CharArrays[127];
+short *CharArrays[255];
 
 /* https://stackoverflow.com/questions/5156192/programmatically-increase-the-pitch-of-an-array-of-audio-samples/5362025 */
 float InterpolateHermite4pt3oX(short* x, float t)
@@ -32,9 +32,9 @@ void ScratchMix(short* outwave, short* inwave, float rate, int inputLen)
 int main(int argc, char* argv[])
 {
     /* Check arguments */
-    if(argc < 2)
+    if(argc < 3)
     {
-        printf("usage: %s [file]\n", argv[0]);
+        printf("usage: %s [file] [output]\n", argv[0]);
         exit(1);
     }
     
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
     sf_readf_short(quack, quackarray, quackinfo->frames);
 
     /* Build a sample for each char */
-    for(char c = (char)0; c <= 'z'; c++)
+    for(unsigned char c = (unsigned char)0; c < 255; c++)
     {
         CharArrays[c] = malloc(fr * sizeof(short));
         float factor = 0.5f;
@@ -63,18 +63,18 @@ int main(int argc, char* argv[])
 
     short *tmparray = (short*)(malloc(fr * sizeof(short)));
     int sz = frt / fr;
+    FILE* f = fopen(argv[2], "w");
     for(size_t i = 0; i < sz; i++)
     {
         sf_readf_short(out, tmparray, fr);
-        char c = (char)0;
-        for(c = (char)0; c <= 'z'; c++)
+        unsigned char c = (unsigned char)0;
+        for(c = (unsigned char)0; c < 255; c++)
         {
             if(memcmp(tmparray, CharArrays[c], fr * sizeof(short)) == 0) break;
         }
-        putchar(c);
+        fwrite(&c, sizeof(unsigned char), 1, f);
     }
-    printf("\n");
-
+    fclose(f);
     sf_close(quack);
     sf_close(out);
     return 0;

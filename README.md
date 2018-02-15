@@ -12,9 +12,9 @@ First you need libsndfile : http://www.mega-nerd.com/libsndfile/
 Then you can invoke `make` to build the thing.
 
 # Example
-`duck_enc "Hello quack world"` creates `out.wav`, an audio file playable by any sound player.
+`duck_enc dummy.txt out.wav` creates `out.wav`, an audio file playable by any sound player, from the contents of the `dummy.tmp` file.
 
-`duck_dec out.wav` writes back "Hello quack world".
+`duck_dec out.wav dummy.raw` writes back the contents embedded in `out.wav` into `dummy.raw`.
 
 # Why ?
 Don't ask me.
