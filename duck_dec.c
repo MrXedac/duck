@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
     sf_readf_short(quack, quackarray, quackinfo->frames);
 
     /* Build a sample for each char */
-    for(unsigned char c = (unsigned char)0; c < 255; c++)
+    for(int c = 0; c <= 255; c++)
     {
         CharArrays[c] = malloc(fr * sizeof(short));
         float factor = 0.5f;
